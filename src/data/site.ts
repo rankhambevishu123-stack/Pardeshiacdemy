@@ -11,7 +11,7 @@ import gallery4 from "@/assets/gallery-4.jpg";
 import event1 from "@/assets/event-1.jpg";
 import event2 from "@/assets/event-2.jpg";
 import event3 from "@/assets/event-3.jpg";
-import aboutImg from "@/assets/about.jpg";
+import aboutImg from "@/assets/dish-2.jpg";
 
 export const site = {
   brand: "Maison Auréa",
