@@ -1,69 +1,95 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Target, HeartHandshake, Eye, ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
-import { site } from "@/data/site";
+import { Reveal } from "@/components/site/Reveal";
+import { SectionHeader } from "@/components/site/SectionHeader";
+import { Counter } from "@/components/site/Counter";
+import { stats, gallery, achievements } from "@/data/academy";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Maison Auréa" },
-      { name: "description", content: "Our story, philosophy, and the people who built Maison Auréa." },
-      { property: "og:title", content: "About — Maison Auréa" },
-      { property: "og:description", content: "Our story, philosophy, and the people who built Maison Auréa." },
+      { title: "About Paradeshi Academy — Karanjade, Panvel" },
+      { name: "description", content: "Learn about Paradeshi Academy: our mission, values and 10+ year record of academic excellence from Nursery to 12th Commerce in Panvel." },
+      { property: "og:title", content: "About Paradeshi Academy" },
+      { property: "og:description", content: "Our mission, values and record of academic excellence in Karanjade, Panvel." },
     ],
-    links: [{ rel: "canonical", href: "/about" }],
   }),
-  component: AboutPage,
+  component: About,
 });
 
 const pillars = [
-  { t: "Our Story", b: "Founded in 2018 as a single dining room in Colaba, Maison Auréa has grown into a small collection of restaurants, bars, and private rooms — each held together by the same idea of the perfect evening." },
-  { t: "Our Vision", b: "To become the most trusted address in Indian hospitality — a place where guests return, not for what is new, but for what is remembered." },
-  { t: "Our Mission", b: "To design evenings that feel private, considered, and quietly luxurious — from the first greeting at the door to the last pour of the night." },
-  { t: "Our Philosophy", b: "Hospitality is a craft of attention. We choose ingredients, light, music, and words with the same care." },
-  { t: "What Sets Us Apart", b: "A ratio of one host to every eight guests. A wine list personally kept by our master sommelier. A kitchen that writes menus like letters, seasonally." },
-  { t: "Our Commitment", b: "To every guest, whether it is their first evening or their fiftieth: an unhurried welcome, and a table that feels like it was waiting only for them." },
+  { icon: Target, title: "Our Mission", text: "To make quality, affordable education accessible to every family in Panvel, and to turn effort into measurable results." },
+  { icon: Eye, title: "Our Vision", text: "An academy where discipline, curiosity and confidence grow together — producing students ready for any board or career path." },
+  { icon: HeartHandshake, title: "Our Values", text: "Honesty with parents, patience with students, and consistency in the classroom, every single day." },
 ];
 
-function AboutPage() {
+function About() {
   return (
     <>
-      <PageHero
-        eyebrow="About the House"
-        title="Hospitality, quietly perfected."
-        intro="Six years, four venues, and one obsession — the modern art of the evening."
-        image={site.aboutImg}
-      />
+      <PageHero eyebrow="About" title="About Paradeshi Academy" intro="Our Effort, Your Result — a promise we have kept for over a decade." />
 
-      <section className="bg-[#F7F4EF] py-28 md:py-36">
-        <div className="container-luxe grid gap-16 md:grid-cols-12">
-          <div className="md:col-span-5">
-            <img src={site.aboutImg} alt="Our kitchen" className="w-full aspect-[3/4] object-cover" loading="lazy" />
+      <section className="section-pa">
+        <div className="container-pa grid items-center gap-12 lg:grid-cols-2">
+          <Reveal direction="left">
+            <img src={gallery[0].src} alt="Paradeshi Academy classroom" loading="lazy" className="w-full rounded-[2rem] object-cover" />
+          </Reveal>
+          <Reveal direction="right">
+            <SectionHeader center={false} eyebrow="Our Story" title="Education built on personal attention" />
+            <p className="mt-5 leading-relaxed text-muted-foreground">
+              Paradeshi Academy is committed to providing quality education with a
+              focus on academic excellence, discipline, and holistic student
+              development. We nurture young minds from Nursery to Commerce, ensuring
+              every student receives personal attention and the right guidance to
+              achieve success.
+            </p>
+            <p className="mt-4 leading-relaxed text-muted-foreground">
+              What began as a small tuition class in Karanjade has grown into a full
+              academy serving over a thousand students — yet the batch sizes have
+              stayed deliberately small, because that is where our results come from.
+            </p>
+            <Link to="/admission" className="btn-pa mt-8">Join the Academy <ArrowRight size={15} /></Link>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section-pa bg-secondary/60">
+        <div className="container-pa">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {stats.map((s, i) => (
+              <Reveal key={s.label} delay={i * 0.07}>
+                <div className="rounded-3xl border border-border bg-card p-8 text-center">
+                  <p className="text-4xl font-extrabold text-gradient-brand"><Counter to={s.value} suffix={s.suffix} /></p>
+                  <p className="mt-2 text-sm font-semibold uppercase tracking-[0.14em] text-muted-foreground">{s.label}</p>
+                </div>
+              </Reveal>
+            ))}
           </div>
-          <div className="md:col-span-7 space-y-12">
-            {pillars.map((p) => (
-              <div key={p.t}>
-                <p className="eyebrow">{p.t}</p>
-                <h3 className="h-display mt-3 text-3xl md:text-4xl text-[#111111]">{p.b.split(".")[0]}.</h3>
-                <span className="divider-gold mt-4" />
-                <p className="mt-5 text-[#2B211B]/75 leading-relaxed max-w-2xl">{p.b}</p>
-              </div>
+
+          <div className="mt-14 grid gap-6 md:grid-cols-3">
+            {pillars.map((p, i) => (
+              <Reveal key={p.title} delay={i * 0.08}>
+                <div className="h-full rounded-3xl border border-border bg-card p-8">
+                  <span className="grid h-12 w-12 place-items-center rounded-2xl bg-secondary text-primary"><p.icon size={22} /></span>
+                  <h3 className="mt-5 text-lg font-extrabold text-foreground">{p.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{p.text}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-[#111111] py-28">
-        <div className="container-luxe grid gap-10 md:grid-cols-3 text-center">
-          {[
-            ["06", "Years of hospitality"],
-            ["04", "Venues under one house"],
-            ["120k", "Evenings served"],
-          ].map(([n, l]) => (
-            <div key={l}>
-              <p className="h-display text-6xl md:text-7xl text-[#C9A96E]">{n}</p>
-              <p className="mt-4 eyebrow text-[#E8DED0]/70">{l}</p>
-            </div>
-          ))}
+      <section className="section-pa">
+        <div className="container-pa">
+          <Reveal><SectionHeader eyebrow="Achievements" title="Milestones we are proud of" /></Reveal>
+          <div className="mx-auto mt-10 grid max-w-3xl gap-4">
+            {achievements.map((a, i) => (
+              <Reveal key={a} delay={i * 0.06}>
+                <div className="rounded-2xl border border-border bg-card px-6 py-5 text-sm font-medium text-foreground">{a}</div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
     </>
