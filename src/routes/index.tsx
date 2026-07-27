@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import {
   ArrowRight, BookOpen, Calculator, GraduationCap, Lightbulb, Trophy,
-  Phone, Download, Bell, CalendarDays, Award, Compass, Play, Sparkles, Quote,
+  Phone, Download, Bell, CalendarDays, Award, Compass, Play, Sparkles, MapPin,
 } from "lucide-react";
 import { academy, stats, courses, whyChooseUs, gallery, notices, events, results, scholarships, faqs, posts, achievements, faculty } from "@/data/academy";
 import { Reveal } from "@/components/site/Reveal";
@@ -459,7 +459,7 @@ function Home() {
             <SectionHeader center={false} eyebrow="Visit Us" title="Come see the academy for yourself" intro="Walk in for a campus tour, meet the faculty and book a free demo lecture." />
             <ul className="mt-7 space-y-4 text-sm">
               <li className="flex items-start gap-3">
-                <Quote size={0} />
+                <MapPin size={17} className="mt-0.5 shrink-0 text-primary" />
                 <span className="text-muted-foreground">{academy.addressLines.join(", ")}</span>
               </li>
               <li><a href={`tel:${academy.phoneRaw}`} className="font-bold text-primary hover:text-accent-foreground">{academy.phone}</a></li>
