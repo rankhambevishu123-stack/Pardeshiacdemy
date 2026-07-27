@@ -2,7 +2,7 @@ export function SectionHeader({
   eyebrow,
   title,
   intro,
-  center = false,
+  center = true,
   light = false,
 }: {
   eyebrow?: string;
@@ -13,21 +13,17 @@ export function SectionHeader({
 }) {
   return (
     <div className={`max-w-2xl ${center ? "mx-auto text-center" : ""}`}>
-      {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-      <h2
-        className={`h-display mt-4 text-4xl md:text-5xl lg:text-6xl ${
-          light ? "text-[#F7F4EF]" : "text-[#111111]"
-        }`}
-      >
+      {eyebrow && (
+        <p className={`eyebrow-pa ${light ? "!text-accent" : ""}`}>
+          <span className={`h-px w-6 ${light ? "bg-accent" : "bg-primary"}`} />
+          {eyebrow}
+        </p>
+      )}
+      <h2 className={`mt-3 text-3xl font-extrabold sm:text-4xl md:text-[2.75rem] ${light ? "text-white" : "text-foreground"}`}>
         {title}
       </h2>
-      <span className={`divider-gold mt-6 ${center ? "mx-auto" : ""}`} />
       {intro && (
-        <p
-          className={`mt-6 text-base leading-relaxed ${
-            light ? "text-[#E8DED0]/75" : "text-[#2B211B]/75"
-          }`}
-        >
+        <p className={`mt-4 text-base leading-relaxed ${light ? "text-white/75" : "text-muted-foreground"}`}>
           {intro}
         </p>
       )}

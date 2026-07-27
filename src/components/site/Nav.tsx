@@ -1,14 +1,17 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
+import { Logo } from "./Logo";
+import { ThemeToggle } from "./ThemeToggle";
+import { academy } from "@/data/academy";
 
 const links = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
-  { to: "/venues", label: "Venues" },
-  { to: "/menu", label: "Menu" },
-  { to: "/experiences", label: "Experiences" },
+  { to: "/courses", label: "Courses" },
+  { to: "/faculty", label: "Faculty" },
   { to: "/gallery", label: "Gallery" },
+  { to: "/blog", label: "Blog" },
   { to: "/contact", label: "Contact" },
 ] as const;
 
@@ -17,7 +20,7 @@ export function Nav() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -25,65 +28,67 @@ export function Nav() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled || open
-          ? "bg-[#111111]/95 backdrop-blur-md border-b border-[#C9A96E]/15"
-          : "bg-gradient-to-b from-black/60 to-transparent"
+          ? "border-b border-border bg-background/80 backdrop-blur-xl"
+          : "bg-transparent"
       }`}
     >
-      <div className="container-luxe flex h-20 items-center justify-between">
-        <Link to="/" className="group flex items-center gap-3">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#C9A96E] text-[#C9A96E] font-display text-lg italic">
-            A
-          </span>
-          <span className="h-display text-[#F7F4EF] text-lg tracking-widest uppercase">
-            Maison <span className="text-[#C9A96E]">Auréa</span>
-          </span>
-        </Link>
+      <div className="container-pa grid h-[72px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
+        <Logo />
 
-        <nav className="hidden lg:flex items-center gap-9">
-          {links.map((l) => (
-            <Link
-              key={l.to}
-              to={l.to}
-              className="text-[11px] uppercase tracking-[0.28em] text-[#F7F4EF]/80 hover:text-[#C9A96E] transition-colors"
-              activeProps={{ className: "text-[#C9A96E]" }}
-              activeOptions={{ exact: l.to === "/" }}
-            >
-              {l.label}
-            </Link>
-          ))}
-        </nav>
+        <div className="flex items-center gap-2">
+          <nav className="mr-2 hidden items-center gap-1 lg:flex">
+            {links.map((l) => (
+              <Link
+                key={l.to}
+                to={l.to}
+                className="rounded-full px-3.5 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:bg-secondary hover:text-primary"
+                activeProps={{ className: "!text-primary bg-secondary" }}
+                activeOptions={{ exact: l.to === "/" }}
+              >
+                {l.label}
+              </Link>
+            ))}
+          </nav>
 
-        <div className="flex items-center gap-3">
-          <Link to="/book" className="btn-gold hidden md:inline-flex !px-5 !py-3 !text-[10px]">
-            Book a Table
+          <ThemeToggle />
+
+          <a href={`tel:${academy.phoneRaw}`} className="btn-pa hidden !px-5 !py-2.5 md:inline-flex">
+            <Phone size={15} /> Call Now
+          </a>
+          <Link to="/admission" className="btn-pa hidden !px-5 !py-2.5 xl:inline-flex">
+            Admission Open
           </Link>
+
           <button
-            aria-label="Menu"
-            className="lg:hidden text-[#F7F4EF] p-2"
+            aria-label="Toggle menu"
+            aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-border text-foreground lg:hidden"
           >
-            {open ? <X size={22} /> : <Menu size={22} />}
+            {open ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </div>
 
       {open && (
-        <div className="lg:hidden bg-[#111111] border-t border-[#C9A96E]/15">
-          <div className="container-luxe py-6 flex flex-col gap-5">
+        <div className="border-t border-border bg-background lg:hidden">
+          <div className="container-pa flex flex-col gap-1 py-4">
             {links.map((l) => (
               <Link
                 key={l.to}
                 to={l.to}
                 onClick={() => setOpen(false)}
-                className="text-sm uppercase tracking-[0.3em] text-[#F7F4EF]/85"
+                className="rounded-xl px-3 py-2.5 text-sm font-semibold text-foreground hover:bg-secondary"
+                activeProps={{ className: "!text-primary bg-secondary" }}
+                activeOptions={{ exact: l.to === "/" }}
               >
                 {l.label}
               </Link>
             ))}
-            <Link to="/book" onClick={() => setOpen(false)} className="btn-gold-solid mt-2 self-start">
-              Book a Table
+            <Link to="/admission" onClick={() => setOpen(false)} className="btn-pa mt-3">
+              Admission Open 2026-27
             </Link>
           </div>
         </div>

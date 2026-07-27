@@ -13,6 +13,9 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
+import { FloatingActions } from "@/components/site/FloatingActions";
+import { AdmissionPopup } from "@/components/site/AdmissionPopup";
+import { PageLoader } from "@/components/site/PageLoader";
 
 function NotFoundComponent() {
   return (
@@ -79,12 +82,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Maison Auréa — A House of Modern Hospitality" },
-      { name: "description", content: "Restaurants, bars, and private rooms shaped by craft, quiet luxury, and unforgettable service." },
-      { property: "og:title", content: "Maison Auréa — A House of Modern Hospitality" },
-      { property: "og:description", content: "Restaurants, bars, and private rooms shaped by craft, quiet luxury, and unforgettable service." },
+      { title: "Paradeshi Academy — Our Effort, Your Result." },
+      { name: "description", content: "Quality coaching from Nursery to 12th Commerce in Karanjade, Panvel — experienced faculty, small batches and result-oriented learning." },
+      { property: "og:title", content: "Paradeshi Academy — Our Effort, Your Result." },
+      { property: "og:description", content: "Quality coaching from Nursery to 12th Commerce in Karanjade, Panvel." },
       { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "Maison Auréa" },
+      { property: "og:site_name", content: "Paradeshi Academy" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
@@ -95,7 +98,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" },
     ],
   }),
   shellComponent: RootShell,
@@ -123,11 +126,14 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <PageLoader />
       <Nav />
       <main className="min-h-screen">
         <Outlet />
       </main>
       <Footer />
+      <FloatingActions />
+      <AdmissionPopup />
     </QueryClientProvider>
   );
 }

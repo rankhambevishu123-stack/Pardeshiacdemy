@@ -1,38 +1,45 @@
 import { Link } from "@tanstack/react-router";
+import { motion } from "framer-motion";
+import { ChevronRight } from "lucide-react";
 
-export function PageHero({
-  eyebrow,
-  title,
-  intro,
-  image,
-}: {
-  eyebrow: string;
-  title: string;
-  intro?: string;
-  image: string;
-}) {
+export function PageHero({ eyebrow, title, intro }: { eyebrow: string; title: string; intro?: string }) {
   return (
-    <section className="relative h-[70vh] min-h-[520px] w-full overflow-hidden">
-      <img
-        src={image}
-        alt=""
-        className="absolute inset-0 h-full w-full object-cover animate-slow-zoom"
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#111111]/70 via-[#111111]/50 to-[#111111]/85" />
-      <div className="relative z-10 h-full container-luxe flex flex-col justify-end pb-20">
-        <p className="eyebrow animate-veil-fade">{eyebrow}</p>
-        <h1 className="h-display mt-4 text-5xl md:text-7xl text-[#F7F4EF] max-w-4xl animate-rise">
+    <section className="gradient-brand relative overflow-hidden pt-32 pb-16 md:pt-40 md:pb-24">
+      <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/25 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-32 -left-16 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
+      <div className="container-pa relative">
+        <motion.p
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="eyebrow-pa !text-accent"
+        >
+          <span className="h-px w-6 bg-accent" />
+          {eyebrow}
+        </motion.p>
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.08 }}
+          className="mt-4 max-w-3xl text-4xl font-extrabold text-white sm:text-5xl md:text-6xl"
+        >
           {title}
-        </h1>
+        </motion.h1>
         {intro && (
-          <p className="mt-6 max-w-2xl text-[#E8DED0]/80 text-lg leading-relaxed animate-rise">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.16 }}
+            className="mt-5 max-w-2xl text-base leading-relaxed text-white/80 md:text-lg"
+          >
             {intro}
-          </p>
+          </motion.p>
         )}
-        <span className="divider-gold mt-8 animate-veil-fade" />
-        <div className="mt-6">
-          <Link to="/book" className="btn-gold">Book a Table</Link>
-        </div>
+        <nav aria-label="Breadcrumb" className="mt-7 flex items-center gap-2 text-xs font-medium text-white/70">
+          <Link to="/" className="hover:text-accent">Home</Link>
+          <ChevronRight size={14} />
+          <span className="text-accent">{eyebrow}</span>
+        </nav>
       </div>
     </section>
   );
